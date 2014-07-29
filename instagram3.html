@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="instagram3.css">
+</head>
+<body>
+  
+  <main id="content" role="main">
+    <div class="scroll-container">
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10299912_1612311732327235_379026377_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10326492_568271299958438_395899787_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10268795_640355219377129_267748001_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/1388798_1437177416529280_2006179514_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/1515939_1461817544052167_1234720688_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10424575_253022904904353_1262258498_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10326359_709075342487218_1624555540_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10507882_1443189865948847_1460270829_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10311334_1477556439144577_1524052595_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/925863_720242594695317_463540233_n.jpg">
+        </li>
+      </ul>
+
+      <!--  -->
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10299912_1612311732327235_379026377_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10326492_568271299958438_395899787_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10268795_640355219377129_267748001_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/1388798_1437177416529280_2006179514_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/1515939_1461817544052167_1234720688_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10424575_253022904904353_1262258498_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10326359_709075342487218_1624555540_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/10507882_1443189865948847_1460270829_n.jpg">
+        </li>
+      </ul>
+
+      <ul class="feed-col">
+        <li>
+          <img src="img/instagram/sample/10311334_1477556439144577_1524052595_n.jpg">
+        </li>
+        <li>
+          <img src="img/instagram/sample/925863_720242594695317_463540233_n.jpg">
+        </li>
+      </ul>
+
+    </div>
+  </main>
+
+  
+  <footer role="contentinfo">
+    Follow us <strong>vesperbkk</strong>
+  </footer>
+
+  
+  <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="libs/jquery.keyframes.min.js"></script>
+
+  <script type="text/javascript">
+    $(function(){
+
+      setTimeout(function(){
+        var theWidth = 1050;
+
+        $.keyframe.define([{
+          name: 'slideshow',
+          '0%': {"transform": "translateX(1050px)"},
+          '100%': {'transform': 'translateX(-'+theWidth+'px)'},
+        }]);
+
+        $(".feed-col").addClass("animated");
+
+      }, 150);
+
+    });
+  </script>
+  
+</body>
+</html>
