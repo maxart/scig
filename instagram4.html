@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="instagram4.css">
+</head>
+<body>
+  
+  <main id="content" role="main">
+    <div class="scroll-container">
+
+      <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+
+    </div>
+  </main>
+
+  
+  <footer role="contentinfo">
+    Follow us <strong>vesperbkk</strong>
+  </footer>
+
+  
+  <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="libs/jquery.keyframes.min.js"></script>
+
+  <script type="text/javascript">
+    $(function(){
+
+      var images = null; 
+
+        $.keyframe.define([{
+          name: 'slideshow',
+          '0%': {"transform": "translateX(1050px)"},
+          '100%': {'transform': 'translateX(-1050px)'}
+        }]);
+      
+      var startup = function(images){
+        console.log("startup!"); 
+        var index = 0; 
+
+        var preloads = {};
+
+        $(".feed-col img").each(function(){
+          var el = $(this);
+          el.data('cell-index', index);
+          el.data('image-index', index); 
+          el.attr('src', images[index]);
+          index++; 
+        });
+
+
+        var moveNext = function(img){
+          var el = $(img); 
+          var cellIndex = parseInt(el.data('cell-index'));
+          var imageIndex = parseInt(el.data('image-index')); 
+          
+          // very wrong!!!!
+          if((imageIndex-cellIndex) % 100 == 0){
+            imageIndex = cellIndex; 
+          }
+
+          imageIndex += 10;  
+
+          el.data('image-index', imageIndex); 
+          el.attr('src', images[imageIndex]);
+          var preload = new Image(640,640);
+
+          preload.src = images[imageIndex+10 ]; 
+          preloads[cellIndex] = preload; 
+        }
+
+
+        var scope = {};
+
+        scope.playKeyframeOptions = {
+          name: 'slideshow', // name of the keyframe you want to bind to the selected element
+          duration: 50000, // [optional, default: 0, in ms] how long you want it to last in milliseconds
+          timingFunction: 'linear', // [optional, default: ease] specifies the speed curve of the animation
+          delay: 0, //[optional, default: 0, in ms]  how long you want to wait before the animation starts in milliseconds, default value is 0
+          repeat: 'infinite', //[optional, default:1]  how many times you want the animation to repeat, default value is 1
+          direction: 'normal', //[optional, default: 'normal']  which direction you want the frames to flow, default value is normal
+          fillMode: 'forwards', //[optional, default: 'forward']  how to apply the styles outside the animation time, default value is forwards
+          complete: function(){
+            var img = $(this).find("img"); 
+            
+            moveNext(img[0]);
+            moveNext(img[1]);
+            
+            // $(img[1]).attr('src', randomItem(images));
+          } //[optional]  Function fired after the animation is complete. If repeat is infinite, the function will be fired every time the animation is restarted.
+        };
+
+        $(".feed-col").playKeyframe(scope.playKeyframeOptions);
+
+      }
+    
+      $.getJSON('./images.json', function(resp){
+        // console.log(resp.images); 
+        images = resp.images;
+        startup(images); 
+      });
+
+
+    });
+  </script>
+  
+</body>
+</html>
