@@ -6,6 +6,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 -----------------------------------------------------*/
 body {
   background: #1E1E1E;
+/*  background: blue;*/
 }
 
 main {
@@ -18,7 +19,7 @@ main {
 }
 
 .scroll-container {
-  width: 4272px;
+  width: 6272px;
   height: 100%;
   position: absolute;
   top: 0; left: -1050px;
@@ -63,9 +64,8 @@ li:first-of-type + li {
   margin-top: 30px;
 }
 
-
 footer {
-  height: 64px;
+  width: 500px; height: 64px;
   position: absolute;
   left: 72px;
   bottom: 52px;
@@ -75,39 +75,32 @@ footer {
   font-weight: thin;
   font-family: 'GothamNarrow-Thin';
   line-height: 64px;
-  padding-left: 80px;
-  background: url('img/instagram/instagram@2x.png') 0 0 no-repeat;
-  background-size: 64px 64px;
+  background: url('img/instagram/instagram@2x.png') 0 0 no-repeat, url('img/instagram/follow-vesperbkk-ig.png') 80px 19px no-repeat;
+  background-size: 64px 64px, 300px 33px;
   cursor: default;
   z-index: 10;
   user-select: none;
 }
 
-footer strong {
-  /*font-weight: light;*/
-  font-family: 'GothamNarrow-Light';
+
+@media screen and (max-width: 1280px) { 
+  li, li img {
+    width: 260px; height: 260px;
+  }
+  .feed-col {
+    width: 260px;
+    margin-right: 20px;
+  }
+  li:first-of-type + li {
+    margin-top: 20px;
+  }
+  main {
+    top: 51px;
+  }
+  body {
+    /*background: red;*/
+
+  }
 }
 
 
-
-/* Media Queries
------------------------------------------------------*/
-
-
-
-/* Animation
------------------------------------------------------*/
-/*@-webkit-keyframes slideshow {
-  0% { -webkit-transform: translateX(0); }
-  100% { -webkit-transform: translateX(-1916px); }
-}
-
-@-moz-keyframes slideshow {
-  0% { -moz-transform: translateX(0); }
-  100% { -moz-transform: translateX(-1916px); }
-}
-
-@keyframes slideshow {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-1916px); }
-}*/

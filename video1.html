@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Video Example</title>
+  <meta name="description" content="Description tag">
+  <meta name="author" content="Some Author">
+
+  <style>
+  body { margin: 0; padding: 0; }
+  </style>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <video id="video" width="1920" height="1080" poster="media/1080p_poster.jpg">
+  <source id="source" src="media/1080p_30fps.mp4" type="video/mp4">
+	Your browser does not support the video tag.
+  </video>
+  <script>
+
+  try{
+
+  var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+  // alert(x + ' × ' + y);
+
+  var video = document.getElementById('video'); 
+  var source = document.getElementById('source'); 
+  var mode = (document.location.href.indexOf("mode=monitor")!=-1) ? 'monitor' : 'screen'; 
+  
+  if(x < 1920){
+  	video.width = 1280; 
+  	video.height = 720;
+  	video.poster = video.poster.replace("1080p","720p"); 
+  	source.src = source.src.replace("1080p","720p"); 
+  }
+
+  if(mode == 'screen'){
+  	video.loop = true; 
+  	video.play(); 
+  } else {
+  	// we are in monitor mode
+  }
+
+} catch(error){
+
+	document.write("error: "+error); 
+	console.log("error", error); 
+}
+
+
+  </script>
+</body>
+</html>

@@ -2,7 +2,8 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" href="instagram4.css">
+  <link rel="stylesheet" href="instagram4.css?x=2">
+<!--   <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0" /> -->
 </head>
 <body>
   
@@ -99,13 +100,30 @@
         </li>
       </ul>
 
+            <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
+
+                  <ul class="feed-col">
+        <li>
+          <img />
+        </li>
+        <li>
+          <img />
+        </li>
+      </ul>
 
     </div>
   </main>
 
   
   <footer role="contentinfo">
-    Follow us <strong>vesperbkk</strong>
+<!--     Follow us <strong>vesperbkk</strong> -->
   </footer>
 
   
@@ -115,55 +133,97 @@
   <script type="text/javascript">
     $(function(){
 
+      var format = ($( window ).width() <= 1280) ? 720 : 1080; 
+      var duration = 80000; 
+      var numCells = 24; 
+      var numCols = 12; 
+      var numImages = 100; 
       var images = null; 
+      var cellSize = (format == 1080) ? 390 : 260; 
+      var cellPadding = (format == 1080) ? 30 : 20; 
+      var cellWidth = cellSize + cellPadding;  
+      var transformOffet = (cellWidth*numCols) / 2 / 2;
 
-        $.keyframe.define([{
-          name: 'slideshow',
-          '0%': {"transform": "translateX(1050px)"},
-          '100%': {'transform': 'translateX(-1050px)'}
-        }]);
+      console.log("transformOffset", transformOffet); 
+
+      $(".scroll-container").css('left', '-'+transformOffet+'px'); 
+
+      $.keyframe.define([{
+        name: 'slideshow',
+        '0%': {"transform": "translateX("+transformOffet+"px)"},
+        '100%': {'transform': "translateX(-"+transformOffet+"px)"}
+      }]);
       
       var startup = function(images){
+
+
+        if($( window ).width() <= 1280){ 
+          // use low res photos.. 
+          if(true){
+            console.log("switch to low res photos"); 
+            for(var i=0; i<images.length; i++){ 
+              images[i] = images[i].replace('_n.jpg', '_a.jpg').replace('_8.jpg','_6.jpg'); 
+            }
+          }
+
+        }
         console.log("startup!"); 
         var index = 0; 
 
         var preloads = {};
 
+        var loadImage = function(img){
+          var el = $(img); 
+          var cellIndex = parseInt(el.data('cell-index'));
+          var colIndex = Math.floor(cellIndex/2) 
+          var imageIndex = parseInt(el.data('image-index')); 
+          
+          // very wrong!!!!
+          if((imageIndex-cellIndex) % (numImages) == 0){
+            imageIndex = cellIndex; 
+          }
+
+          if(el.attr('src')){
+            imageIndex += numCols;  
+          }
+
+          el.data('image-index', imageIndex); 
+          el.attr('src', images[imageIndex]);
+
+          var preload = new Image(640,640);
+
+          var preloadIndex = imageIndex+numCols; 
+
+          if(preloadIndex > numImages){
+            preloadIndex = preloadIndex - numImages; 
+          }
+
+          preload.src = images[imageIndex+numCols ]; 
+          preloads[cellIndex] = preload; 
+
+          if(colIndex < numCols/2 ){
+            setTimeout(function(){
+              el.attr('src', preload.src); 
+            }, (colIndex+1.2) * (duration/(numCols/2)) );            
+          }
+
+
+        }
+
         $(".feed-col img").each(function(){
           var el = $(this);
           el.data('cell-index', index);
           el.data('image-index', index); 
-          el.attr('src', images[index]);
+          // el.attr('src', images[index]);
+          loadImage(this);           
           index++; 
         });
-
-
-        var moveNext = function(img){
-          var el = $(img); 
-          var cellIndex = parseInt(el.data('cell-index'));
-          var imageIndex = parseInt(el.data('image-index')); 
-          
-          // very wrong!!!!
-          if((imageIndex-cellIndex) % 100 == 0){
-            imageIndex = cellIndex; 
-          }
-
-          imageIndex += 10;  
-
-          el.data('image-index', imageIndex); 
-          el.attr('src', images[imageIndex]);
-          var preload = new Image(640,640);
-
-          preload.src = images[imageIndex+10 ]; 
-          preloads[cellIndex] = preload; 
-        }
-
 
         var scope = {};
 
         scope.playKeyframeOptions = {
           name: 'slideshow', // name of the keyframe you want to bind to the selected element
-          duration: 50000, // [optional, default: 0, in ms] how long you want it to last in milliseconds
+          duration: duration, // [optional, default: 0, in ms] how long you want it to last in milliseconds
           timingFunction: 'linear', // [optional, default: ease] specifies the speed curve of the animation
           delay: 0, //[optional, default: 0, in ms]  how long you want to wait before the animation starts in milliseconds, default value is 0
           repeat: 'infinite', //[optional, default:1]  how many times you want the animation to repeat, default value is 1
@@ -172,8 +232,8 @@
           complete: function(){
             var img = $(this).find("img"); 
             
-            moveNext(img[0]);
-            moveNext(img[1]);
+            loadImage(img[0]);
+            loadImage(img[1]);
             
             // $(img[1]).attr('src', randomItem(images));
           } //[optional]  Function fired after the animation is complete. If repeat is infinite, the function will be fired every time the animation is restarted.
